@@ -1,0 +1,20 @@
+{
+    "0": { // from state
+        "0": [ // toState
+            "b" // letter used to transition
+        ],
+        "1": [ // to state
+            "a" // letter used
+        ]
+    },
+    "1": {
+        "2": [
+            "a"
+        ]
+    },
+    "2": {
+        "0": [
+            "b"
+        ]
+    }
+}
