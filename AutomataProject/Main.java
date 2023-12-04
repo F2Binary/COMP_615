@@ -43,23 +43,31 @@ public class Main {
 			DFA_Helper.setFinalState(dfaB, 2);
 
 			// Print start and final states for DFA3
+			System.out.println("---------------------------------");
+			System.out.println("Summary: ");
+			System.out.println("---------------------------------");
 			System.out.println("DFA-A - Start State: q" + dfaA.getStartState().getId());
 			System.out.print("DFA-A - Final States: ");
 			dfa3.getFinalStates().forEach(state -> System.out.print("q" + state.getId() + " "));
 			System.out.println();
 
 			// Print start and final states for DFA5
-			System.out.println("DFA-B - Start State: q" + dfaB.getStartState().getId());
+			System.out.println("\nDFA-B - Start State: q" + dfaB.getStartState().getId());
 			System.out.print("DFA-B - Final States: ");
 			dfa5.getFinalStates().forEach(state -> System.out.print("q" + state.getId() + " "));
 			System.out.println();
+			System.out.println("---------------------------------");
 
 
 			// Display each DFA
 			System.out.println("\nDFA-A:");
+			System.out.println("---------------------------------:");
 			DFA_Helper.displayDFA(dfaA);
+			System.out.println("---------------------------------:");
 			System.out.println("\nDFA-B:");
+			System.out.println("---------------------------------:");
 			DFA_Helper.displayDFA(dfaB);
+			System.out.println("---------------------------------:");
 
 			// Check for equivalence
 			Equivalence_Checker checker = new Equivalence_Checker();

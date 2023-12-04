@@ -10,7 +10,6 @@ import java.util.Set;
 import javafx.util.Pair;
 
 
-
 public class Equivalence_Checker {
 
     private Set<Pair<State, State>> visited;
@@ -21,6 +20,11 @@ public class Equivalence_Checker {
     }
 
     private boolean areStatesEquivalent(State state1, State state2) {
+
+        // Debugging
+        state1.printStateInfo();
+        state2.printStateInfo();
+
         // Base cases
         if (state1 == null || state2 == null) return state1 == state2;
         if (state1.isFinal() != state2.isFinal()) return false;
@@ -34,12 +38,19 @@ public class Equivalence_Checker {
             State nextState1 = state1.getNextState(symbol);
             State nextState2 = state2.getNextState(symbol);
 
+            // Print transition comparison details
+            System.out.println("Comparing transitions: q" + state1.getId() + " --[" + symbol + "]--> q" + (nextState1 != null ? nextState1.getId() : "null") +
+                    " with q" + state2.getId() + " --[" + symbol + "]--> q" + (nextState2 != null ? nextState2.getId() : "null"));
+
             if (!areStatesEquivalent(nextState1, nextState2)) return false;
         }
         return true;
     }
 
     private Set<Character> getAllSymbols(State state1, State state2) {
+//      // Debugging
+//      System.out.println("\nState A: " + state1.getTransitionSymbols() + "\nState B: " + state2.getTransitionSymbols());
+
         // Combine symbols from both states
         Set<Character> symbols = new HashSet<>(state1.getTransitionSymbols());
         symbols.addAll(state2.getTransitionSymbols());
@@ -47,38 +58,37 @@ public class Equivalence_Checker {
     }
 
 
-
-
     // Method to generate an adjacency list for a given DFA
-    private Map<Integer, List<String>> generateAdjacencyList(DFA dfa) {
-        Map<Integer, List<String>> adjacencyList = new HashMap<>();
-        for (State state : dfa.getStates()) {
-            List<String> transitions = new ArrayList<>();
-            for (Character symbol : state.getTransitionSymbols()) {
-                State nextState = state.getNextState(symbol);
-                if (nextState != null) {
-                    transitions.add(symbol + "->q" + nextState.getId());
-                }
-            }
-            adjacencyList.put(state.getId(), transitions);
-        }
-        return adjacencyList;
-    }
+//    private Map<Integer, List<String>> generateAdjacencyList(DFA dfa) {
+//        Map<Integer, List<String>> adjacencyList = new HashMap<>();
+//        for (State state : dfa.getStates()) {
+//            List<String> transitions = new ArrayList<>();
+//            for (Character symbol : state.getTransitionSymbols()) {
+//                State nextState = state.getNextState(symbol);
+//                if (nextState != null) {
+//                    transitions.add(symbol + "->q" + nextState.getId());
+//                }
+//            }
+//            adjacencyList.put(state.getId(), transitions);
+//        }
+//        return adjacencyList;
+//    }
+//
+//    // Method to print an adjacency list
+//    private void printAdjacencyList(Map<Integer, List<String>> adjacencyList, String dfaName) {
+//        System.out.println("\nAdjacency List for " + dfaName + ":");
+//        for (Map.Entry<Integer, List<String>> entry : adjacencyList.entrySet()) {
+//            System.out.println("State q" + entry.getKey() + ": " + entry.getValue());
+//        }
+//    }
+//
+//    // Method to compare adjacency lists of two DFAs
+//    private boolean compareAdjacencyLists(Map<Integer, List<String>> list1, Map<Integer, List<String>> list2) {
+//        // Assuming the first state read is the start state (with the lowest ID)
+//        int startState1 = list1.keySet().stream().min(Integer::compare).orElse(-1);
+//        int startState2 = list2.keySet().stream().min(Integer::compare).orElse(-1);
+//
+//        return startState1 != -1 && startState2 != -1 && list1.get(startState1).equals(list2.get(startState2));
+//    }
 
-    // Method to print an adjacency list
-    private void printAdjacencyList(Map<Integer, List<String>> adjacencyList, String dfaName) {
-        System.out.println("\nAdjacency List for " + dfaName + ":");
-        for (Map.Entry<Integer, List<String>> entry : adjacencyList.entrySet()) {
-            System.out.println("State q" + entry.getKey() + ": " + entry.getValue());
-        }
-    }
-
-    // Method to compare adjacency lists of two DFAs
-    private boolean compareAdjacencyLists(Map<Integer, List<String>> list1, Map<Integer, List<String>> list2) {
-        // Assuming the first state read is the start state (with the lowest ID)
-        int startState1 = list1.keySet().stream().min(Integer::compare).orElse(-1);
-        int startState2 = list2.keySet().stream().min(Integer::compare).orElse(-1);
-
-        return startState1 != -1 && startState2 != -1 && list1.get(startState1).equals(list2.get(startState2));
-    }
 }

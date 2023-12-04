@@ -5,9 +5,12 @@ public class DFA_Helper {
 
     public static void displayDFA(DFA dfa) {
         for (State state : dfa.getStates()) {
-            System.out.println("State ID: q" + state.getId()); // Removed extra string concatenation
+            // Print state ID
+            System.out.println("State ID: q" + state.getId());
+
             boolean hasTransitions = false;
 
+            // Print transitions
             for (Character symbol : state.getTransitionSymbols()) {
                 State nextState = state.getNextState(symbol);
                 if (nextState != null) {
@@ -22,11 +25,19 @@ public class DFA_Helper {
                 System.out.println("  This state has no transitions.");
             }
 
+            // Check if it's a start state
+            if (state.equals(dfa.getStartState())) {
+                System.out.println("  ** This is a START state. **");
+            }
+
+            // Check if it's a final state
             if (state.isFinal()) {
-                System.out.println("  This is a final state.");
+                System.out.println("  ** This is a FINAL state. **");
             }
         }
     }//end method
+
+
 
     // Method to set the start state of a DFA based on state ID
     public static void setStartState(DFA dfa, int startStateId) {
