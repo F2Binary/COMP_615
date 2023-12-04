@@ -17,6 +17,8 @@ public class Main {
 			String filePath3 = "AutomataProject/Frontend_Helpers/Testing/json_folder/dfa3.json";
 			String filePath4 = "AutomataProject/Frontend_Helpers/Testing/json_folder/dfa4.json";
 			String filePath5 = "AutomataProject/Frontend_Helpers/Testing/json_folder/dfa5.json";
+			String filePath6 = "AutomataProject/Frontend_Helpers/Testing/json_folder/dfa4.json";
+			String filePath7 = "AutomataProject/Frontend_Helpers/Testing/json_folder/dfa5.json";
 
 			// Read JSON content from files
 			String jsonDFA1 = new String(Files.readAllBytes(Paths.get(filePath1)));
@@ -24,6 +26,8 @@ public class Main {
 			String jsonDFA3 = new String(Files.readAllBytes(Paths.get(filePath3)));
 			String jsonDFA4 = new String(Files.readAllBytes(Paths.get(filePath4)));
 			String jsonDFA5 = new String(Files.readAllBytes(Paths.get(filePath5)));
+			String jsonDFA6 = new String(Files.readAllBytes(Paths.get(filePath6)));
+			String jsonDFA7 = new String(Files.readAllBytes(Paths.get(filePath7)));
 
 			// Parse the JSON content to create DFA objects
 			DFA dfa1 = JSON_Helper.parseJSON(jsonDFA1);
@@ -31,13 +35,18 @@ public class Main {
 			DFA dfa3 = JSON_Helper.parseJSON(jsonDFA3);
 			DFA dfa4 = JSON_Helper.parseJSON(jsonDFA4);
 			DFA dfa5 = JSON_Helper.parseJSON(jsonDFA5);
+			DFA dfa6 = JSON_Helper.parseJSON(jsonDFA4);
+			DFA dfa7 = JSON_Helper.parseJSON(jsonDFA5);
 
 			// Assign DFAs for testing
-			DFA dfaA = dfa3;
-			DFA dfaB = dfa5;
+			DFA dfaA = dfa6;
+			DFA dfaB = dfa7;
+
+			// dfa6 and dfa7 should not be equivalent
+			// dfa3 and dfa5 should be equivalent
 
 			// Set start and final states for DFA3 and DFA5
-			DFA_Helper.setStartState(dfaA, 3);
+			DFA_Helper.setStartState(dfaA, 0);
 			DFA_Helper.setFinalState(dfaA, 2);
 			DFA_Helper.setStartState(dfaB, 0);
 			DFA_Helper.setFinalState(dfaB, 2);
@@ -48,13 +57,13 @@ public class Main {
 			System.out.println("---------------------------------");
 			System.out.println("DFA-A - Start State: q" + dfaA.getStartState().getId());
 			System.out.print("DFA-A - Final States: ");
-			dfa3.getFinalStates().forEach(state -> System.out.print("q" + state.getId() + " "));
+			dfaA.getFinalStates().forEach(state -> System.out.print("q" + state.getId() + " "));
 			System.out.println();
 
 			// Print start and final states for DFA5
 			System.out.println("\nDFA-B - Start State: q" + dfaB.getStartState().getId());
 			System.out.print("DFA-B - Final States: ");
-			dfa5.getFinalStates().forEach(state -> System.out.print("q" + state.getId() + " "));
+			dfaB.getFinalStates().forEach(state -> System.out.print("q" + state.getId() + " "));
 			System.out.println();
 			System.out.println("---------------------------------");
 

@@ -14,12 +14,15 @@ public class Equivalence_Checker {
 
     private Set<Pair<State, State>> visited;
 
+
     public boolean areEquivalent(DFA dfa1, DFA dfa2) {
-        visited = new HashSet<>();
-        return areStatesEquivalent(dfa1.getStartState(), dfa2.getStartState());
+        HashSet<Integer> visitedDFA1 = new HashSet<>();
+        HashSet<Integer> visitedDFA2 = new HashSet<>();
+        return areStatesEquivalent(dfa1.getStartState(), dfa2.getStartState(), visitedDFA1, visitedDFA2);
     }
 
-    private boolean areStatesEquivalent(State state1, State state2) {
+
+    private boolean areStatesEquivalent(State state1, State state2, HashSet<Integer> visitedDFA1, HashSet<Integer> visitedDFA2) {
 
         // Debugging
         state1.printStateInfo();
@@ -28,10 +31,10 @@ public class Equivalence_Checker {
         // Base cases
         if (state1 == null || state2 == null) return state1 == state2;
         if (state1.isFinal() != state2.isFinal()) return false;
-        Pair<State, State> statePair = new Pair<>(state1, state2);
-        if (visited.contains(statePair)) return true; // Already visited this pair
+        if (visitedDFA1.contains(state1.getId()) && visitedDFA2.contains(state2.getId())) return true; // Already visited these states
 
-        visited.add(statePair);
+        visitedDFA1.add(state1.getId());
+        visitedDFA2.add(state2.getId());
 
         // Compare transitions
         for (Character symbol : getAllSymbols(state1, state2)) {
@@ -39,10 +42,10 @@ public class Equivalence_Checker {
             State nextState2 = state2.getNextState(symbol);
 
             // Print transition comparison details
-            System.out.println("Comparing transitions: q" + state1.getId() + " --[" + symbol + "]--> q" + (nextState1 != null ? nextState1.getId() : "null") +
-                    " with q" + state2.getId() + " --[" + symbol + "]--> q" + (nextState2 != null ? nextState2.getId() : "null"));
+            System.out.println("DFA1: Comparing transitions: q" + state1.getId() + " --[" + symbol + "]--> q" + (nextState1 != null ? nextState1.getId() : "null") +
+                    " with DFA2: q" + state2.getId() + " --[" + symbol + "]--> q" + (nextState2 != null ? nextState2.getId() : "null"));
 
-            if (!areStatesEquivalent(nextState1, nextState2)) return false;
+            if (!areStatesEquivalent(nextState1, nextState2, visitedDFA1, visitedDFA2)) return false;
         }
         return true;
     }
