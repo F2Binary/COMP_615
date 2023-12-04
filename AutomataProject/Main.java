@@ -6,19 +6,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+
 public class Main {
 	public static void main(String[] args) {
 		System.out.println("Testing DFA1 and DFA2 Equivalence Checker.");
 
 		try {
-
-			// Using TEXT_Helper
-			// String filePath1 = "AutomataProject/Frontend_Helpers/Testing/txt_folder/dfa1.txt";
-			// String filePath2 = "AutomataProject/Frontend_Helpers/Testing/txt_folder/dfa2.txt";
-			// DFA dfa1 = TEXT_Helper.readDFAFromFile(filePath1);
-			// DFA dfa2 = TEXT_Helper.readDFAFromFile(filePath2);
-
-			// Using JSON_Helper
 			String filePath1 = "AutomataProject/Frontend_Helpers/Testing/json_folder/dfa1.json";
 			String filePath2 = "AutomataProject/Frontend_Helpers/Testing/json_folder/dfa2.json";
 			String filePath3 = "AutomataProject/Frontend_Helpers/Testing/json_folder/dfa3.json";
@@ -39,14 +32,33 @@ public class Main {
 			DFA dfa4 = JSON_Helper.parseJSON(jsonDFA4);
 			DFA dfa5 = JSON_Helper.parseJSON(jsonDFA5);
 
-			// Assign DFA for testing here
+			// Assign DFAs for testing
 			DFA dfaA = dfa3;
-			DFA dfaB = dfa4;
+			DFA dfaB = dfa5;
+
+			// Set start and final states for DFA3 and DFA5
+			DFA_Helper.setStartState(dfaA, 3);
+			DFA_Helper.setFinalState(dfaA, 2);
+			DFA_Helper.setStartState(dfaB, 0);
+			DFA_Helper.setFinalState(dfaB, 2);
+
+			// Print start and final states for DFA3
+			System.out.println("DFA-A - Start State: q" + dfaA.getStartState().getId());
+			System.out.print("DFA-A - Final States: ");
+			dfa3.getFinalStates().forEach(state -> System.out.print("q" + state.getId() + " "));
+			System.out.println();
+
+			// Print start and final states for DFA5
+			System.out.println("DFA-B - Start State: q" + dfaB.getStartState().getId());
+			System.out.print("DFA-B - Final States: ");
+			dfa5.getFinalStates().forEach(state -> System.out.print("q" + state.getId() + " "));
+			System.out.println();
+
 
 			// Display each DFA
-			System.out.println("DFA A:");
+			System.out.println("\nDFA-A:");
 			DFA_Helper.displayDFA(dfaA);
-			System.out.println("\nDFA B:");
+			System.out.println("\nDFA-B:");
 			DFA_Helper.displayDFA(dfaB);
 
 			// Check for equivalence
@@ -54,14 +66,8 @@ public class Main {
 			boolean areEquivalent = checker.areEquivalent(dfaA, dfaB);
 			System.out.println("\nAre the two DFAs equivalent? " + areEquivalent);
 
-			// Print state ID matching if they are equivalent
-			if (areEquivalent) {
-				checker.printStateIdMatching(dfaA, dfaB);
-			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}//end main
 }//end class
-

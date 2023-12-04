@@ -1,7 +1,7 @@
 package DFA_Equivalence;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class State {
@@ -9,39 +9,41 @@ public class State {
     private boolean isFinal;
     private Map<Character, State> transitions;
 
+
     public State(int id) {
         this.id = id;
-        this.transitions = new HashMap<>();
         this.isFinal = false;
+        this.transitions = new HashMap<>();
     }
 
-    // Method to add a transition
-    public void addTransition(char input, State toState) {
-        transitions.put(input, toState);
+    // Add a transition from this state to another state
+    public void addTransition(char symbol, State nextState) {
+        transitions.put(symbol, nextState);
     }
 
-    // Getters and other methods
-    public int getId() {
-        return id;
+    // Get the next state for a given transition symbol
+    public State getNextState(char symbol) {
+        return transitions.get(symbol);
     }
 
-    public State getNextState(char input) {
-        return transitions.get(input);
-    }
-
+    // Get the set of transition symbols
     public Set<Character> getTransitionSymbols() {
         return transitions.keySet();
     }
 
+    // Check if the state is final
     public boolean isFinal() {
         return isFinal;
     }
 
+    // Set the state as final
     public void setFinal(boolean isFinal) {
         this.isFinal = isFinal;
     }
 
-    public boolean correspondsTo(State otherState) {
-        return this.id == otherState.getId();
+    // Get the state ID
+    public int getId() {
+        return id;
     }
-}
+
+}//end class

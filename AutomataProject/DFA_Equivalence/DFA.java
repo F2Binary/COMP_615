@@ -1,29 +1,49 @@
 package DFA_Equivalence;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DFA {
-    private Map<Integer, State> states;
+    private Set<State> states;
+    private State startState;
+    private Set<State> finalStates;
 
     public DFA() {
-        this.states = new HashMap<>();
+        this.states = new HashSet<>();
+        this.finalStates = new HashSet<>();
+    }
+
+    public void setStartState(State startState) {
+        this.startState = startState;
+    }
+    public State getStartState() {
+        return startState;
+    }
+
+    public void addFinalState(State finalState) {
+        finalStates.add(finalState);
+    }
+
+    public Set<State> getFinalStates() {
+        return finalStates;
     }
 
     public State getState(int id) {
-        states.putIfAbsent(id, new State(id));
-        return states.get(id);
+        // Iterate over the set to find the state with the given ID
+        for (State state : states) {
+            if (state.getId() == id) {
+                return state;
+            }
+        }
+        return null; // or throw an exception if a state is not found
     }
 
-    public Collection<State> getStates() {
-        return states.values();
+    public void addState(State state) {
+        states.add(state);
     }
 
-    // Set a state as a final state
-    public void setFinalState(int id, boolean isFinal) {
-        State state = getState(id);
-        state.setFinal(isFinal);
+    public Set<State> getStates() {
+        return states;
     }
 
-}
+}//end class
