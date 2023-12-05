@@ -39,14 +39,14 @@ public class Main {
 			DFA dfa7 = JSON_Helper.parseJSON(jsonDFA5);
 
 			// Assign DFAs for testing
-			DFA dfaA = dfa6;
-			DFA dfaB = dfa7;
+			DFA dfaA = dfa3;
+			DFA dfaB = dfa5;
 
 			// dfa6 and dfa7 should not be equivalent
 			// dfa3 and dfa5 should be equivalent
 
 			// Set start and final states for DFA3 and DFA5
-			DFA_Helper.setStartState(dfaA, 0);
+			DFA_Helper.setStartState(dfaA, 0); // for testing dfa3 and dfa5 enter 3 here; for testing dfa6 and dfa7 enter 0 here.
 			DFA_Helper.setFinalState(dfaA, 2);
 			DFA_Helper.setStartState(dfaB, 0);
 			DFA_Helper.setFinalState(dfaB, 2);
